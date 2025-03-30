@@ -1,0 +1,6 @@
+strict digraph G {
+	"im_out.tcp/22->22"->"aws_instance.my_ec2";
+	"aws_instance.my_ec2" [ height=1.15, image="C:\\Users\\isc03\\AppData\\Local\\cache/inframap/assets/aws/Compute/Amazon-EC2.png", imagepos=tc, labelloc=b, shape=plaintext ];
+	"im_out.tcp/22->22" [ height=1.15, image="C:\\Users\\isc03\\AppData\\Local\\cache/inframap/assets/im/baseline_cloud_queue_black.png", imagepos=tc, labelloc=b, shape=plaintext ];
+
+}
