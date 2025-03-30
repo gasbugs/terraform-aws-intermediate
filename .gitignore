@@ -1,0 +1,27 @@
+# Terraform 관련 파일
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+*.lock.hcl
+*.backup
+
+# 환경 설정 및 변수 정의
+# *.tfvars
+.aws/credentials
+.aws/config
+.env
+
+# 비밀 정보 파일
+secrets.yaml
+modules/your_module/secrets/*
+
+# 인증서 및 키 파일
+*.pem
+*.csr
+
+# 백업 및 로그 파일
+crash.log
+*.zip
+
+# 기타 숨김 파일

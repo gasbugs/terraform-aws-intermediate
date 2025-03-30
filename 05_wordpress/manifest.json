@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "name": "wordpress",
+      "builder_type": "amazon-ebs",
+      "build_time": 1731999990,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0cd913f496bae5294",
+      "packer_run_uuid": "b4be3fc5-df9a-a167-60be-401ee89cbced",
+      "custom_data": null
+    }
+  ],
+  "last_run_uuid": "b4be3fc5-df9a-a167-60be-401ee89cbced"
+}
