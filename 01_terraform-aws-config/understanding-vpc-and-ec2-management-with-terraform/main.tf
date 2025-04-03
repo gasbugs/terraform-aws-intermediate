@@ -96,7 +96,6 @@ data "aws_ami" "al2023" {
 }
 
 resource "aws_instance" "my_ec2" {
-<<<<<<< HEAD
   ami                         = data.aws_ami.al2023.id            # 사용할 AMI ID 설정
   instance_type               = var.instance_type                 # EC2 인스턴스 유형
   subnet_id                   = aws_subnet.public_subnet.id       # 퍼블릭 서브넷에 인스턴스 배치
@@ -135,22 +134,6 @@ resource "aws_volume_attachment" "example_attachment" {
   instance_id = aws_instance.my_ec2.id # 연결할 EC2 인스턴스 ID
 }
 
-=======
-  ami           = data.aws_ami.al2023.id
-  instance_type = var.instance_type
-  subnet_id     = aws_subnet.public_subnet.id
-
-  vpc_security_group_ids      = [aws_security_group.my_sg.id]
-  associate_public_ip_address = var.associate_public_ip
-
-  key_name = aws_key_pair.my_key_pair.key_name
-
-  tags = {
-    Name = "MyEC2Instance"
-  }
-}
-
->>>>>>> aef693e8d7358d70aa68ada8006558cff40a3cd9
 resource "random_string" "key_name_suffix" {
   length  = 8
   special = false
