@@ -21,12 +21,6 @@ variable "environment" {
   default     = "dev"                              # 기본값: dev, 개발 환경을 나타냄
 }
 
-# EC2 인스턴스에 사용할 AMI ID
-variable "ami_id" {
-  description = "EC2 인스턴스에 사용할 AMI의 ID" # AMI ID 설명
-  type        = string                  # 문자열 타입
-  default     = "ami-063d43db0594b521b" # Amazon Linux 2023 AMI ID (리전에 맞게 변경 필요)
-}
 
 # EC2 인스턴스 유형 설정
 variable "instance_type" {
