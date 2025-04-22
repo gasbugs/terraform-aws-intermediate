@@ -20,7 +20,7 @@ locals {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws" # VPC 모듈의 소스 경로
-  version = "5.15.0"
+  version = "5.21.0"
 
   name = local.name     # VPC 이름 설정
   cidr = local.vpc_cidr # VPC의 CIDR 블록 설정

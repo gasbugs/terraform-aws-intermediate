@@ -105,10 +105,10 @@ resource "aws_instance" "my_ec2" {
 
   # 루트 볼륨 설정
   root_block_device {
-    volume_size           = 20          # 루트 볼륨 크기 (GB)
-    volume_type           = "gp3"       # 볼륨 타입 (gp2, gp3, io1 등)
-    delete_on_termination = true        # 인스턴스 종료 시 볼륨 삭제 여부
-    encrypted             = true        # 암호화 여부
+    volume_size           = 30    # 루트 볼륨 크기 (GB)
+    volume_type           = "gp3" # 볼륨 타입 (gp2, gp3, io1 등)
+    delete_on_termination = true  # 인스턴스 종료 시 볼륨 삭제 여부
+    encrypted             = true  # 암호화 여부
   }
 
   tags = {
@@ -119,9 +119,9 @@ resource "aws_instance" "my_ec2" {
 # 추가 디스크 설정 
 resource "aws_ebs_volume" "example_volume" {
   availability_zone = aws_instance.my_ec2.availability_zone # EC2 인스턴스와 동일한 AZ
-  size              = 10          # 볼륨 크기 (GB)
-  type              = "gp2"       # 볼륨 타입 (예: gp2, io1 등)
-  encrypted         = true        # 암호화 여부
+  size              = 10                                    # 볼륨 크기 (GB)
+  type              = "gp2"                                 # 볼륨 타입 (예: gp2, io1 등)
+  encrypted         = true                                  # 암호화 여부
   tags = {
     Name = "ExampleVolume"
   }
@@ -129,9 +129,9 @@ resource "aws_ebs_volume" "example_volume" {
 
 # 추가 디스크 연결 
 resource "aws_volume_attachment" "example_attachment" {
-  device_name = "/dev/xvdf"                   # EC2에 마운트될 디바이스 이름
+  device_name = "/dev/xvdf"                      # EC2에 마운트될 디바이스 이름
   volume_id   = aws_ebs_volume.example_volume.id # 연결할 EBS 볼륨 ID
-  instance_id = aws_instance.my_ec2.id # 연결할 EC2 인스턴스 ID
+  instance_id = aws_instance.my_ec2.id           # 연결할 EC2 인스턴스 ID
 }
 
 resource "random_string" "key_name_suffix" {
