@@ -23,11 +23,11 @@ provider "aws" {
 # Ubuntu 24.04 AMI ID를 가져오는 data 블록 
 data "aws_ami" "ubuntu" {
   most_recent = true
-  #owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID (주석 처리)
+  owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID
 
   filter {
-    name   = "name"              # 이름 필터 설정
-    values = ["ubuntu", "24.04"] # Ubuntu 24.04 AMI 검색
+    name   = "name"                                                          # 이름 필터 설정
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"] # Ubuntu 24.04 AMI 검색
   }
 
   filter {
@@ -41,7 +41,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "my_ec2" {
   count = 3
   ami   = data.aws_ami.ubuntu.id
-  # instance_type = "t2.micro"
+  #instance_type = "t2.micro"
   instance_type               = "t2.small"
   key_name                    = aws_key_pair.my_key_pair.key_name
   subnet_id                   = module.my_vpc.public_subnets[count.index]
