@@ -23,11 +23,11 @@ provider "aws" {
 # Ubuntu 24.04 AMI ID를 가져오는 data 블록 (출시 후 사용 가능)
 data "aws_ami" "ubuntu" {
   most_recent = true
-  #owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID (주석 처리)
+  owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID (주석 처리)
 
   filter {
-    name   = "name"              # 이름 필터 설정
-    values = ["ubuntu", "24.04"] # Ubuntu 24.04 AMI 검색
+    name   = "name"                                                          # 이름 필터 설정
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"] # Ubuntu 24.04 AMI 검색
   }
 
   filter {
