@@ -35,11 +35,11 @@ data "aws_ami" "al2023" {
 # Ubuntu 24.04 AMI ID를 가져오는 data 블록 (출시 후 사용 가능)
 data "aws_ami" "ubuntu" {
   most_recent = true
-  #owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID (주석 처리)
+  owners      = ["099720109477"] # Canonical의 공식 AWS 계정 ID (주석 처리)
 
   filter {
-    name   = "name"              # 이름 필터 설정
-    values = ["ubuntu", "24.04"] # Ubuntu 24.04 AMI 검색
+    name   = "name"                                                          # 이름 필터 설정
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"] # Ubuntu 24.04 AMI 검색
   }
 
   filter {
@@ -80,6 +80,7 @@ resource "aws_instance" "my_ec2" {
   # 사용할 AMI ID - AMI ID 변경 시 replace 업데이트됨
   ami           = true ? data.aws_ami.al2023.id : data.aws_ami.ubuntu.id
   instance_type = "t2.micro" # 인스턴스 유형 설정 - in-place 업데이트됨
+  # instance_type = "c5.large"
 
   # 태그 이름 - in-place 업데이트됨
   tags = {
