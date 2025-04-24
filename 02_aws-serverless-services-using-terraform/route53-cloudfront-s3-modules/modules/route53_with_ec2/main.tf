@@ -43,7 +43,7 @@ resource "random_integer" "key_suffix" {
 # 키 페어 생성
 resource "aws_key_pair" "generated_key_pair" {
   key_name   = "my-key-${random_integer.key_suffix.result}" # 랜덤한 숫자를 포함한 키 페어 이름
-  public_key = file(var.pub_key_file_path)                  # 공개 키 파일의 경로 지정 (로컬에 저장된 .pub 파일)
+  public_key = file(pathexpand(var.pub_key_file_path))      # 공개 키 파일의 경로 지정 (로컬에 저장된 .pub 파일)
 }
 
 # 보안 그룹 생성 (SSH와 DNS 쿼리를 허용)

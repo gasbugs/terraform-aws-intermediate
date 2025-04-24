@@ -15,7 +15,7 @@ error_document_path = "files/error.html" # 로컬에서 에러 파일 경로
 # Route53 및 EC2 설정
 private_dns_name         = "test.private.example.com"
 instance_type            = "t2.micro"
-pub_key_file_path        = "c:/users/isc03/.ssh/my-key.pub"
+pub_key_file_path        = "~/.ssh/my-key.pub"
 vpc_name                 = "private-dns-test-vpc"
 vpc_cidr_block           = "10.0.0.0/16"
 public_subnet_cidr       = "10.0.0.0/24"
