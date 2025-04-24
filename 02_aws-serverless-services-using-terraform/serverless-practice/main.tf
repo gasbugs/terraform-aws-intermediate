@@ -320,21 +320,21 @@ resource "aws_sns_topic_subscription" "lambda_errors_email" {
   endpoint  = "your-email@example.com"
 }
 
-# CloudWatch 알람 수정
+# CloudWatch 알람 리소스 정의 (Lambda 함수 에러 감시)
 resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
-  alarm_name          = "lambda-errors"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "Errors"
-  namespace           = "AWS/Lambda"
-  period              = "60"
-  statistic           = "Sum"
-  threshold           = "0"
-  alarm_description   = "This metric monitors lambda errors"
-  alarm_actions       = [aws_sns_topic.lambda_errors.arn]
+  alarm_name          = "lambda-errors"                      # 알람 이름 지정
+  comparison_operator = "GreaterThanThreshold"               # 임계값보다 크면 알람 발생
+  evaluation_periods  = "1"                                  # 1번의 평가 기간 동안 조건 충족 시 알람
+  metric_name         = "Errors"                             # 감시할 메트릭 이름 (Lambda 에러)
+  namespace           = "AWS/Lambda"                         # 메트릭 네임스페이스 (Lambda)
+  period              = "60"                                 # 평가 주기(초), 1분마다 집계
+  statistic           = "Sum"                                # 해당 기간 동안의 합계로 평가
+  threshold           = "0"                                  # 임계값: 0 (에러가 1건이라도 발생하면 알람)
+  alarm_description   = "This metric monitors lambda errors" # 알람 설명
+  alarm_actions       = [aws_sns_topic.lambda_errors.arn]    # 알람 발생 시 알림을 보낼 SNS 토픽
 
   dimensions = {
-    FunctionName = aws_lambda_function.my_serverless_function.function_name
+    FunctionName = aws_lambda_function.my_serverless_function.function_name # 감시 대상 Lambda 함수 이름 지정
   }
 }
 
