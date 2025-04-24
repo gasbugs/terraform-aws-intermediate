@@ -65,7 +65,7 @@ resource "aws_iam_role_policy_attachment" "lambda_s3" {
 resource "aws_lambda_function" "my_lambda" {
   function_name = "MyLambdaFunction"                     # Lambda 함수 이름
   handler       = "lambda_function.handler"              # Lambda 핸들러 경로
-  runtime       = "python3.8"                            # Lambda의 Python 런타임 버전
+  runtime       = "python3.10"                           # Lambda의 Python 런타임 버전
   role          = aws_iam_role.lambda_execution_role.arn # Lambda 실행 역할의 ARN
 
   s3_bucket = aws_s3_bucket.lambda_bucket.id       # s3 버킷 지정
