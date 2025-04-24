@@ -43,11 +43,6 @@ variable "private_dns_name" {
   type        = string
 }
 
-variable "ami_id" {
-  description = "EC2 인스턴스에 사용할 AMI ID"
-  type        = string
-}
-
 variable "instance_type" {
   description = "EC2 인스턴스 타입"
   type        = string

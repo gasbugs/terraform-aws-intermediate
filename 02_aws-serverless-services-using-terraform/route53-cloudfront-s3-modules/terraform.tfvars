@@ -14,7 +14,6 @@ error_document_path = "files/error.html" # 로컬에서 에러 파일 경로
 
 # Route53 및 EC2 설정
 private_dns_name         = "test.private.example.com"
-ami_id                   = "ami-0ebfd941bbafe70c6" # Amazon Linux 2023 AMI (리전을 확인하여 변경 필요)
 instance_type            = "t2.micro"
 pub_key_file_path        = "c:/users/isc03/.ssh/my-key.pub"
 vpc_name                 = "private-dns-test-vpc"

@@ -29,7 +29,24 @@ module "route53_with_ec2" {
   cloudfront_hosted_zone_id = module.cloudfront.cloudfront_hosted_zone_id
 
   private_dns_name  = var.private_dns_name
-  ami_id            = var.ami_id
+  ami_id            = data.aws_ami.al2023.id
   instance_type     = var.instance_type
   pub_key_file_path = var.pub_key_file_path
+}
+
+
+# Amazon Linux 2023 AMI ID를 검색하는 데이터 소스 설정
+data "aws_ami" "al2023" {
+  most_recent = true       # 최신 AMI를 가져오도록 설정
+  owners      = ["amazon"] # AMI 소유자가 Amazon인 것만 필터링
+
+  filter {
+    name   = "name"           # 필터 조건: 이름이 특정 패턴과 일치해야 함
+    values = ["al2023-ami-*"] # Amazon Linux 2023 AMI 이름 패턴과 일치하는 값만 가져옴
+  }
+
+  filter {
+    name   = "architecture" # 필터 조건: 아키텍처가 특정 값과 일치해야 함
+    values = ["x86_64"]     # x86_64 아키텍처 AMI만 가져옴
+  }
 }
