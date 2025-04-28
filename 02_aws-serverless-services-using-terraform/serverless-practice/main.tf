@@ -213,10 +213,13 @@ resource "aws_cloudfront_distribution" "api_distribution" {
 # VPC 설정
 ##########################################################################
 locals {
+  my_zone = "us-east-1"
   aws_zone_mapping = {
-    "us-east-1" = ["a", "b", "c"]
+    "us-east-1"      = ["a", "b", "c"]
+    "ap-northeast-2" = ["a", "b", "c"]
+
   }
-  azs = [for az in local.aws_zone_mapping["us-east-1"] : "us-east-1${az}"]
+  azs = [for az in local.aws_zone_mapping[local.my_zone] : "${local.my_zone}${az}"]
 }
 
 module "my_vpc" {
@@ -246,7 +249,7 @@ resource "aws_route53_zone" "main" {
   name = "your-domain.com" # Hosted Zone 생성 및 사용자 지정 도메인 생성
   vpc {
     vpc_id     = module.my_vpc.vpc_id
-    vpc_region = "us-east-1"
+    vpc_region = local.my_zone
   }
 }
 
@@ -358,7 +361,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           ]
           view    = "timeSeries"
           stacked = false
-          region  = "us-east-1"
+          region  = local.my_zone
           title   = "Lambda and API Gateway Metrics"
         }
       }
