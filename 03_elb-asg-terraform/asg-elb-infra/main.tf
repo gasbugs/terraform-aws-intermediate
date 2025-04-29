@@ -8,7 +8,7 @@ resource "random_integer" "example" {
 # 생성된 랜덤 값을 포함하여 키 페어 생성
 resource "aws_key_pair" "example" {
   key_name   = "example-keypair-${random_integer.example.result}"
-  public_key = file(var.pub_key_file_path) # 사용자 지정 경로의 공개 키 파일 불러오기
+  public_key = file(pathexpand(var.pub_key_file_path)) # 사용자 지정 경로의 공개 키 파일 불러오기
 }
 
 # VPC 모듈 생성

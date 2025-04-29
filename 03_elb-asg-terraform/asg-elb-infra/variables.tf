@@ -8,12 +8,6 @@ variable "aws_profile" {
   type        = string
 }
 
-# AMI ID를 변수로 정의
-variable "ami_id" {
-  description = "AMI ID to use for the EC2 instances"
-  type        = string
-}
-
 # 퍼블릭 키 경로
 variable "pub_key_file_path" {
   description = "value"
