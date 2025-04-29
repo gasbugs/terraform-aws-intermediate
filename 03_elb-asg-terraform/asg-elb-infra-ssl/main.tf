@@ -7,7 +7,7 @@ resource "random_integer" "example" {
 # 기존 키 페어 사용
 resource "aws_key_pair" "example" {
   key_name   = "example-keypair-${random_integer.example.result}"
-  public_key = file(var.pub_key_file_path)
+  public_key = file(pathexpand(var.pub_key_file_path))
 }
 
 module "vpc" {

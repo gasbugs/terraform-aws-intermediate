@@ -1,10 +1,7 @@
 # AWS Provider
 aws_region        = "us-east-1"
 aws_profile       = "my-profile"
-pub_key_file_path = "C:\\users\\isc03\\.ssh\\my-key.pub"
-
-# 사용할 AMI ID
-ami_id = "ami-0601dda195a5d5fcc" # packer를 통해 생성된 ami를 지정 
+pub_key_file_path = "~/.ssh/my-key.pub"
 
 # 오토 스케일링 그룹의 원하는 설정
 instance_type    = "t2.micro"
