@@ -82,6 +82,7 @@ resource "aws_rds_cluster" "my_aurora_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "my_aurora_instance" {
+  count                = 3                                    # 쓰기, 읽기, 읽기
   cluster_identifier   = aws_rds_cluster.my_aurora_cluster.id # 클러스터 ID
   instance_class       = var.db_instance_class                # 인스턴스 클래스
   engine               = "aurora-mysql"                       # 엔진 (Aurora MySQL)
@@ -91,8 +92,8 @@ resource "aws_rds_cluster_instance" "my_aurora_instance" {
   apply_immediately    = true                                 # 업데이트 즉시 적용
 
   tags = {
-    Name        = "My-Aurora-Instance" # 인스턴스 이름 태그
-    Environment = var.environment      # 환경 태그
+    Name        = "My-Aurora-Instance${count.index + 1}" # 인스턴스 이름 태그
+    Environment = var.environment                        # 환경 태그
   }
 }
 

@@ -19,7 +19,7 @@ output "aurora_cluster_reader_endpoint" {
 # Aurora 인스턴스의 ID
 output "aurora_instance_id" {
   description = "The ID of the Aurora cluster instance"
-  value       = aws_rds_cluster_instance.my_aurora_instance.id
+  value       = aws_rds_cluster_instance.my_aurora_instance[*].id
 }
 
 # Aurora 클러스터 ARN (Amazon Resource Name)
