@@ -20,7 +20,7 @@ resource "random_integer" "random_number" {
 # EC2에 사용할 키 페어 생성
 resource "aws_key_pair" "ec2_key_pair" {
   key_name   = "ec2-key-pair-${random_integer.random_number.result}"
-  public_key = file(var.public_key_path)
+  public_key = file(pathexpand(var.public_key_path))
 }
 
 # EC2 인스턴스를 위한 보안 그룹 생성
