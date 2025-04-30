@@ -39,3 +39,8 @@ variable "min_size" {
   type        = number
   default     = 2
 }
+
+variable "packer_ami" {
+  description = "구성한 packer ami id를 입력"
+  type        = string
+}

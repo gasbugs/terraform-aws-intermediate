@@ -8,7 +8,7 @@ resource "random_integer" "example" {
 # 생성된 랜덤 값을 포함하여 키 페어 생성
 resource "aws_key_pair" "example" {
   key_name   = "example-keypair-${random_integer.example.result}"
-  public_key = file(var.pub_key_file_path) # 사용자 지정 경로의 공개 키 파일 불러오기
+  public_key = file(pathexpand(var.pub_key_file_path)) # 사용자 지정 경로의 공개 키 파일 불러오기
 }
 
 # VPC 모듈 생성
@@ -44,8 +44,8 @@ module "vpc" {
 # Launch Template을 정의하여 인스턴스 시작 템플릿 설정
 resource "aws_launch_template" "example" {
   name_prefix   = "example-launch-template"
-  image_id      = "ami-07e0c399a79f0bb6a" # 패커로 빌드한 후 생성된 ami 사용
-  instance_type = var.instance_type       # 인스턴스 유형 변수 사용
+  image_id      = var.packer_ami    # 패커로 빌드한 후 생성된 ami 사용
+  instance_type = var.instance_type # 인스턴스 유형 변수 사용
 
   key_name = aws_key_pair.example.key_name # 생성된 키 페어 이름 설정
 
