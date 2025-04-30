@@ -1,13 +1,13 @@
 # AWS Provider
 aws_region        = "us-east-1"
 aws_profile       = "my-profile"
-pub_key_file_path = "C:\\users\\isc03\\.ssh\\my-key.pub"
+pub_key_file_path = "~/.ssh/my-key.pub"
 
 # 사용할 AMI ID
-# ami_id  = "ami-059ff513639dda899" # packer를 통해 생성된 nginx_old 이미지 지정
+# ami_id  = "ami-05c3aff343e5ccf09" # packer를 통해 생성된 nginx_old 이미지 지정
 # asg_tag = "old-nginx-asg"
 
-ami_id  = "ami-0221e9371f11806fe" # packer를 통해 생성된 nginx_new 이미지 지정
+ami_id  = "ami-09b37ee864e47c84c" # packer를 통해 생성된 nginx_new 이미지 지정
 asg_tag = "new-nginx-asg"
 
 # 오토 스케일링 그룹의 원하는 설정
