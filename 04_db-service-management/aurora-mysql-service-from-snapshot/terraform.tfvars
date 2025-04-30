@@ -31,5 +31,5 @@ db_cluster_snapshot_identifier = "tf-snapshot-2024-11-16t08-56-02z"
 # EC2에 대한 변수
 instance_type   = "t2.micro"
 instance_name   = "db_client"
-public_key_path = "C:\\users\\isc03\\.ssh\\my-key.pub"
+public_key_path = "~/.ssh/my-key.pub"
 
