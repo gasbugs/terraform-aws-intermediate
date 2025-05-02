@@ -63,17 +63,18 @@ resource "aws_db_subnet_group" "this" {
 }
 
 resource "aws_rds_cluster" "my_aurora_cluster" {
-  cluster_identifier      = "${var.cluster_identifier}-0"  # 클러스터 ID
-  engine                  = "aurora-mysql"                 # 엔진 종류 (MySQL 호환 Aurora)
-  engine_version          = var.db_engine_version          # 엔진 버전
-  master_username         = var.db_username                # 관리자 계정 이름
-  master_password         = var.db_password                # 관리자 계정 비밀번호
-  db_subnet_group_name    = aws_db_subnet_group.this.name  # DB 서브넷 그룹 이름
-  vpc_security_group_ids  = [aws_security_group.rds_sg.id] # VPC 보안 그룹 ID
-  skip_final_snapshot     = true                           # 삭제 시 최종 스냅샷 생성 여부
-  backup_retention_period = 7                              # 백업 보존 기간 (일)
-  preferred_backup_window = "07:00-09:00"                  # 백업 시간 (UTC 기준)
-  apply_immediately       = true                           # 업데이트 즉시 적용
+  cluster_identifier           = "${var.cluster_identifier}-0"  # 클러스터 ID
+  engine                       = "aurora-mysql"                 # 엔진 종류 (MySQL 호환 Aurora)
+  engine_version               = var.db_engine_version          # 엔진 버전
+  master_username              = var.db_username                # 관리자 계정 이름
+  master_password              = var.db_password                # 관리자 계정 비밀번호
+  db_subnet_group_name         = aws_db_subnet_group.this.name  # DB 서브넷 그룹 이름
+  vpc_security_group_ids       = [aws_security_group.rds_sg.id] # VPC 보안 그룹 ID
+  skip_final_snapshot          = true                           # 삭제 시 최종 스냅샷 생성 여부
+  backup_retention_period      = 7                              # 백업 보존 기간 (일)
+  preferred_backup_window      = "07:00-09:00"                  # 백업 시간 (UTC 기준)
+  apply_immediately            = true                           # 업데이트 즉시 적용
+  preferred_maintenance_window = "mon:05:00-mon:07:00"          # 유지보수 시간 (UTC 기준)
 
   tags = {
     Name        = "My-Aurora-Cluster" # 클러스터 이름 태그
@@ -82,7 +83,7 @@ resource "aws_rds_cluster" "my_aurora_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "my_aurora_instance" {
-  count                = 3                                    # 쓰기, 읽기, 읽기
+  count                = 1                                    # 쓰기, 읽기, 읽기
   cluster_identifier   = aws_rds_cluster.my_aurora_cluster.id # 클러스터 ID
   instance_class       = var.db_instance_class                # 인스턴스 클래스
   engine               = "aurora-mysql"                       # 엔진 (Aurora MySQL)
