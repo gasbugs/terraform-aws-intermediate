@@ -109,7 +109,7 @@ variable "redis_num_cache_nodes" {
 variable "redis_parameter_group_name" {
   description = "Parameter group for Redis"
   type        = string
-  default     = "default.redis7"
+  default     = "default.valkey8"
 }
 
 # EC2 Variables

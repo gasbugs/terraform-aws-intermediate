@@ -37,14 +37,23 @@ resource "aws_security_group" "redis_sg" {
 
 # ElastiCache Cluster for Redis
 resource "aws_elasticache_replication_group" "redis_cluster" {
-  replication_group_id = "${var.project_name}-redis"
+  replication_group_id = "${var.project_name}-valkey"
   description          = "Redis replication group with sharding enabled"
-  engine               = "redis"
+  engine               = "valkey"
   node_type            = var.node_type
-  num_cache_clusters   = var.num_cache_nodes
   parameter_group_name = var.parameter_group_name
   subnet_group_name    = aws_elasticache_subnet_group.redis_subnet_group.name
   security_group_ids   = [aws_security_group.redis_sg.id]
+
+  # 클러스터 모드 비활성 시 필요한 아규먼트
+  cluster_mode       = "disabled"
+  num_cache_clusters = var.num_cache_nodes
+  multi_az_enabled   = false # multi az를 활성화하려면 num_cache_clusters를 2개 이상으로 구성해야 함
+
+  # 클러스터 모드 구성 시 필요한 아규먼트
+  # cluster_mode            = "enabled"
+  # num_node_groups         = 2 # 노드 그룹 수 = 샤드 수 
+  # replicas_per_node_group = 1 # 노드 그룹 당 복제본 수 
 
   # Enable encryption in transit (TLS)
   transit_encryption_enabled = true

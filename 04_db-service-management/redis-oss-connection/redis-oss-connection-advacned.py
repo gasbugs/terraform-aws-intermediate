@@ -4,7 +4,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 # Redis 엔드포인트 및 TLS 설정
-redis_host = 'master.my-project-redis.ygzznw.use1.cache.amazonaws.com'
+redis_host = 'master.my-project-valkey.ygzznw.use1.cache.amazonaws.com'
 redis_port = 6379
 redis_auth_token = 'YourStrongAuthPassword123!'  # Terraform으로 설정한 패스워드
 

@@ -1,7 +1,7 @@
 import redis
 
 # Redis 클러스터 엔드포인트로 연결
-redis_host = 'master.my-project-redis.ygzznw.use1.cache.amazonaws.com'
+redis_host = 'master.my-project-valkey.ygzznw.use1.cache.amazonaws.com'
 redis_port = 6379
 redis_auth_token = 'YourStrongAuthPassword123!'  # Terraform으로 설정한 패스워드
 
