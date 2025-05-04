@@ -13,21 +13,24 @@ project_name         = "my-project"
 
 #######################################
 # DynamoDB에 대한 변수
-dynamodb_table_name    = "Users"
-dynamodb_hash_key      = "UserId"
-dynamodb_hash_key_type = "S"
-dynamodb_billing_mode  = "PAY_PER_REQUEST"
+dynamodb_table_name     = "Products"
+dynamodb_hash_key       = "product_id"
+dynamodb_hash_key_type  = "S"
+dynamodb_billing_mode   = "PROVISIONED"
+dynamodb_read_capacity  = 5
+dynamodb_write_capacity = 5
 
 #######################################
 # Redis에 대한 변수
-redis_allowed_cidr_blocks = ["10.0.0.0/16"]
-redis_auth_token          = "YourStrongAuthPassword123!"
+redis_allowed_cidr_blocks  = ["10.0.0.0/16"]
+redis_auth_token           = "YourStrongAuthPassword123!"
+redis_parameter_group_name = "default.valkey8.cluster.on"
 
 #######################################
 # EC2에 대한 변수
 ec2_ami_id                  = "ami-0fff1b9a61dec8a5f"
 ec2_instance_type           = "t2.micro"
-ec2_public_key_path         = "C:/users/isc03/.ssh/my-key.pub"
+ec2_public_key_path         = "~/.ssh/my-key.pub"
 ec2_allowed_ssh_cidr_blocks = ["0.0.0.0/0"]
 
 #######################################
