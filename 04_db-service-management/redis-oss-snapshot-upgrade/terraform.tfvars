@@ -9,5 +9,5 @@ project_name         = "my-project"
 # Redis settings
 redis_allowed_cidr_blocks = ["10.0.0.0/16"]
 redis_auth_token          = "YourStrongAuthPassword123!"
-# redis_node_type           = "cache.t3.micro"
-redis_node_type = "cache.t3.medium"
+redis_node_type           = "cache.t3.micro"
+# redis_node_type = "cache.t3.medium"
