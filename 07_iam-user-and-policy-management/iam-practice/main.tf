@@ -1,8 +1,5 @@
 #####################################################################
 # 1)
-# 현재 AWS 계정 ID를 가져오기 위한 데이터 소스 선언
-data "aws_caller_identity" "current" {}
-
 # S3 읽기/쓰기 정책 생성 #IAM #S3 #ReadWritePolicy
 resource "aws_iam_policy" "s3_rw_policy" {
   name        = "S3ReadWritePolicy"                                                 # 정책 이름
@@ -55,7 +52,7 @@ resource "aws_iam_role" "dev_ec2_status_viewer" {
       {
         "Effect" : "Allow", # 역할 위임 허용
         "Principal" : {
-          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/operating_user" # 역할을 사용할 계정 ID (운영 계정)
+          "AWS" : "${aws_iam_user.operating_user.arn}" # 역할을 사용할 계정 ID (운영 계정)
         },
         "Action" : "sts:AssumeRole" # sts:AssumeRole 액션 허용
       }
