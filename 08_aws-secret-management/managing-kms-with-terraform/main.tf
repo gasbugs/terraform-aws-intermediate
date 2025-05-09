@@ -3,6 +3,9 @@ data "aws_vpc" "default" {
   default = true # 리전 내의 기본 VPC를 지정함
 }
 
+data "aws_caller_identity" "current" {}
+
+
 # 1000에서 9999 사이의 랜덤한 숫자를 생성하여 키 이름에 사용
 resource "random_integer" "unique_value" {
   min = 1000 # 랜덤 숫자의 최소값
@@ -13,6 +16,8 @@ resource "random_integer" "unique_value" {
 resource "aws_kms_key" "s3_encryption_key" {
   description             = "KMS key for S3 encryption" # KMS 키 설명
   deletion_window_in_days = 30                          # 키 삭제 시 복구할 수 있는 기간 설정 (30일)
+  enable_key_rotation     = true
+  rotation_period_in_days = 90
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -22,7 +27,7 @@ resource "aws_kms_key" "s3_encryption_key" {
         Sid : "Enable IAM User Permissions",
         Effect : "Allow",
         Principal : {
-          "AWS" : "arn:aws:iam::445567110488:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/user0"
         },
         Action : "kms:*",
         Resource : "*"
@@ -42,8 +47,6 @@ resource "aws_kms_key" "s3_encryption_key" {
     ]
   })
 }
-
-data "aws_caller_identity" "current" {}
 
 # 랜덤한 숫자를 포함한 고유한 이름으로 S3 버킷 생성
 resource "aws_s3_bucket" "example_bucket" {
