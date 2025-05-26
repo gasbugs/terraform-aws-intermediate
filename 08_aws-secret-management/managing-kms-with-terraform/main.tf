@@ -31,7 +31,7 @@ resource "aws_kms_key" "s3_encryption_key" {
         },
         Action : "kms:*",
         Resource : "*"
-      } /*,
+      },
       {
         Sid    = "Allow use of the key by EC2 role",
         Effect = "Allow",
@@ -43,7 +43,7 @@ resource "aws_kms_key" "s3_encryption_key" {
           "kms:GenerateDataKey"
         ],
         Resource = "*"
-      }*/
+      }
     ]
   })
 }
@@ -95,7 +95,7 @@ resource "aws_iam_policy" "ec2_s3_kms_policy" {
           "s3:PutObject" # S3에서 객체를 가져오고 업로드할 수 있는 권한
         ]
         Resource = "${aws_s3_bucket.example_bucket.arn}/*" # 생성된 S3 버킷의 모든 객체에 대한 권한
-      },
+      } /*, 이 권한은 명시하지 않아도 kms 리소스 기반 정책에서 허용되므로 필요 없음 // 명시적 거부에는 IAM 정책도 유용
       {
         Effect = "Allow"
         Action = [
@@ -103,7 +103,7 @@ resource "aws_iam_policy" "ec2_s3_kms_policy" {
           "kms:GenerateDataKey" # KMS 키를 이용하여 데이터 키를 생성하고 복호화할 수 있는 권한
         ]
         Resource = aws_kms_key.s3_encryption_key.arn # 생성된 KMS 키에 대한 권한
-      }
+      }*/
     ]
   })
 }
