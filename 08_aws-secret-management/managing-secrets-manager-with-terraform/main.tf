@@ -6,9 +6,14 @@ resource "aws_kms_key" "example_key" {
   deletion_window_in_days = 10
 }
 
+resource "random_integer" "secret_suffix" {
+  min = 1000
+  max = 9999
+}
+
 # AWS Secrets Manager 시크릿 생성
 resource "aws_secretsmanager_secret" "example_secret" {
-  name        = var.secret_name
+  name        = "${var.secret_name}-${random_integer.secret_suffix.result}"
   description = var.secret_description
   kms_key_id  = aws_kms_key.example_key.arn
 }
