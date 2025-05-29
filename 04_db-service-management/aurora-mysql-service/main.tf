@@ -104,7 +104,7 @@ resource "aws_rds_cluster_instance" "my_aurora_instance" {
 resource "aws_rds_cluster" "my_aurora_cluster" {
   cluster_identifier      = "my-aurora-cluster"          # 클러스터 ID
   engine                  = "aurora-mysql"               # 엔진 종류 (MySQL 호환 Aurora)
-  engine_version          = "5.7.mysql_aurora.2.11.2"    # 엔진 버전
+  engine_version          = "8.0.mysql_aurora.3.06.1"    # 엔진 버전
   master_username         = "admin"                      # 관리자 계정 이름
   master_password         = "YourPassword123!"           # 관리자 비밀번호
   db_subnet_group_name    = aws_db_subnet_group.my_db_subnet_group.name # DB 서브넷 그룹 이름

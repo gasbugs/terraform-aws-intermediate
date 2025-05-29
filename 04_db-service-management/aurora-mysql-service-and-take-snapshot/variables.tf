@@ -85,7 +85,7 @@ variable "cluster_identifier" {
 variable "db_engine_version" {
   description = "The version of the Aurora engine"
   type        = string
-  default     = "5.7.mysql_aurora.2.10.0" # 예시: MySQL 호환 버전
+  default     = "8.0.mysql_aurora.3.06.1" # 예시: MySQL 호환 버전
 }
 
 variable "db_username" {
