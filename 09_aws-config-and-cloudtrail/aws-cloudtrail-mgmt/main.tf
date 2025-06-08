@@ -6,8 +6,8 @@ resource "random_integer" "uid" {
 
 # CloudTrail 로그를 저장할 S3 버킷 생성, 고유한 이름을 사용
 resource "aws_s3_bucket" "cloudtrail_bucket" {
-  bucket = "my-cloudtrail-logs-bucket-${random_integer.uid.result}" # 랜덤 ID를 포함한 고유한 버킷 이름 생성
-
+  bucket        = "my-cloudtrail-logs-bucket-${random_integer.uid.result}" # 랜덤 ID를 포함한 고유한 버킷 이름 생성
+  force_destroy = true
   tags = {
     Name = "CloudTrailLogsBucket"
   }
@@ -87,7 +87,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail_log_group" {
 
 # CloudTrail이 CloudWatch에 로그를 전송할 수 있도록 IAM 역할 생성
 resource "aws_iam_role" "cloudtrail_role" {
-  name = "cloudtrail-role"
+  name = "cloudtrail-role-${random_integer.uid.result}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
