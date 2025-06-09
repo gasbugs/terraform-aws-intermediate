@@ -32,16 +32,70 @@ resource "aws_s3_bucket_versioning" "cloudtrail_bucket_versioning" {
   }
 }
 
-# S3 버킷에 대한 서버 측 암호화 설정, AES256 암호화를 사용하여 보안 강화
+# S3 버킷에 대한 서버 측 암호화 설정, kms 암호화를 사용하여 보안 강화
 resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail_bucket_sse" {
   bucket = aws_s3_bucket.cloudtrail_bucket.bucket
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256" # AES256 암호화 적용
+      sse_algorithm     = "aws:kms"                  # KMS 암호화 방식 지정
+      kms_master_key_id = aws_kms_key.s3_kms_key.arn # 생성한 KMS 키 ARN 연결
     }
   }
 }
+
+
+# 현재 계정 정보를 가져오는 데이터 소스
+# 현재 AWS 계정 ID, ARN, 사용자 정보를 가져옴
+#data "aws_caller_identity" "current" {}
+
+locals {
+  my_cloudtrail = "my-cloudtrail"
+  region        = "us-east-1"
+}
+
+resource "aws_kms_key" "s3_kms_key" {
+  description             = "S3 버킷 암호화용 KMS 키"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Id      = "cloudtrail-key-policy",
+    Statement = [
+      # 필수: 키 정책 관리 권한 추가 
+      {
+        Sid    = "EnableRootAndDeployerAccess",
+        Effect = "Allow",
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        },
+        Action   = "kms:*",
+        Resource = "*"
+      },
+      # CloudTrail 접근 권한 (기존 정책 보강)
+      {
+        Sid    = "EnableCloudTrailAccess",
+        Effect = "Allow",
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        },
+        Action = [
+          "kms:GenerateDataKey*",
+          "kms:Decrypt",
+          "kms:DescribeKey"
+        ],
+        Resource = "*",
+        Condition = {
+          StringEquals = {
+            "aws:SourceArn" = "arn:aws:cloudtrail:${local.region}:${data.aws_caller_identity.current.account_id}:trail/${local.my_cloudtrail}"
+          }
+        }
+      }
+    ]
+  })
+}
+
 
 # CloudTrail 로그 저장을 위한 S3 버킷 정책 설정
 resource "aws_s3_bucket_policy" "cloudtrail_bucket_policy" {
@@ -121,7 +175,7 @@ resource "aws_iam_role_policy" "cloudtrail_policy" {
 
 # CloudTrail 설정, 로그 파일 무결성 검증 활성화
 resource "aws_cloudtrail" "main" {
-  name                          = "my-cloudtrail"
+  name                          = local.my_cloudtrail
   s3_bucket_name                = aws_s3_bucket.cloudtrail_bucket.bucket
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_log_group.arn}:*"
   cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_role.arn
