@@ -87,7 +87,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail_log_group" {
 
 # CloudTrail이 CloudWatch에 로그를 전송할 수 있도록 IAM 역할 생성
 resource "aws_iam_role" "cloudtrail_role" {
-  name = "cloudtrail-role"
+  name = "cloudtrail-role-${random_integer.uid.result}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
